@@ -2,7 +2,6 @@ import express from 'express';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
 import path from 'path';
-import fs from 'fs';
 import mongoose from 'mongoose';
 
 const __dirname = path.resolve();
@@ -43,14 +42,14 @@ const writingSchema = new Schema({
     } 
 
 })
+
+//writingSchema를 가지고 있는 객체
 const Writing = mongoose.model('Writing',writingSchema);
 // middleware
 // main page GET
 app.get('/', async (req, res) => {
-   // const fileData = fs.readFileSync(filePath);
-   // const writings = JSON.parse(fileData);
 
-   //쓴 글 모두 가져오기
+   //쓴 글 모두 가져오기 (Writing 모든 객체가져옴)
     let writings = await Writing.find({})
 
     res.render('main',{list:writings});
@@ -59,21 +58,18 @@ app.get('/', async (req, res) => {
 
 app.get('/write', (req, res) => {
     res.render('write');
-
-
 });
 
 app.post('/write', async (req, res) => {
     const title = req.body.title;
     const contents = req.body.contents;
 
-    //monggodb에 저장
+    //mongodb에 저장
     const writing = new Writing({
         title: title,
         contents: contents
-
-
     })
+
     const result = await writing.save().then(()=>{
         console.log('Succeess')
         res.render('detail',{'detail':{title:title, contents: contents}});
@@ -81,22 +77,6 @@ app.post('/write', async (req, res) => {
         res.render('write')
     })
 
-
-    // const fileData = fs.readFileSync(filePath);
-    // const writings = JSON.parse(fileData);
-
-    // //request를 저장
-    // writings.push({
-    //     'title' : title,
-    //     'contents' : contents,
-    //     'date' : date
-
-    // });
-
-    // // data/writring.json에 저장하기
-    // fs.writeFileSync(filePath, JSON.stringify(writings));
-
-    //res.render('detail',  { title: title, contents: contents, date: date } );
 });
 
 app.get('/detail/:id', async (req, res) => {

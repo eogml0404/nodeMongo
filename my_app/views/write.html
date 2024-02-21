@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<h1>글 작성 페이지입니다.</h1>
+{% block content %} 
+<br>
+
+<div id="writeDiv">
+<h2>글 작성</h2>
+<br>
 <form action="/write" method="post">
+    <div style="border: 1px solid black; padding: 1%; width: fit-content;">
+  
     <label for="title">제목</label>
-    <input type="text" name="title" id="title">
+    <input type="text" name="title" id="title" style="width: 200px;">
     <br>
-    <label for="contents">내용</label>
-    <textarea name="contents" id="contents" cols="20" rows="5"></textarea>
+    <br>
+    <label for="contents" style="vertical-align: middle; display: inline-block;">내용</label>
+    <textarea name="contents" id="contents" style="width: 200px;vertical-align: middle; display: inline-block;" cols="20" rows="5"></textarea>
     
     <br>
     <!-- input submit -->
-    <input type="submit" value="글 작성 완료">
+    <br>
+    <input type="submit" value="글 쓰기">
+    </div>
 </form>
+</div>
 {% endblock %}

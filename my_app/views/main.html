@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <br>
     <h1>메인 페이지</h1>
+    <br>
     {% if list %}
         
-        <table class="table">
+        <table class="table table-bordered">
             <tr>
                 <th>글 제목</th>
                 <th>글 내용</th>
@@ -14,8 +16,12 @@
         {% for writing in list %}
         <tr>
             <td><a href="/detail/{{ writing.id }}">{{ writing.title }}</a></td>
-            <td>{{ writing.contents }}</td>
-            <td>{{ writing.date }}</td>
+            <td><a href="/detail/{{ writing.id }}">{{ writing.contents }}</a></td>
+            <td><span id="date{{ writing.id }}"></span></td>
+            <script>
+                var date = new Date('{{ writing.date }}');
+                document.getElementById('date{{ writing.id }}').innerText = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+            </script>
         </tr>
         {% endfor %}
         </table>
